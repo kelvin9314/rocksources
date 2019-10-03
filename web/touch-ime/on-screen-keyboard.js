@@ -30,10 +30,12 @@ function/*OnScreenKeyboard*/() {
     #'+ctrl.show_input_keys_id+' {\
         font-size:18px;min-width: 5em; max-width: 8em;\
         float: left; clear: left;\
+        background-color: #ffe5cc;\
+        color: #000;\
     }\
     #'+ctrl.candidate_id+' {\
         clear: both;\
-        height: 60px; max-width:320px;\
+        height: 90px; max-width:320px;\
         overflow-x: hidden; overflow-y: auto;\
         margin-bottom: 5px;\
     }\
@@ -64,11 +66,20 @@ function/*OnScreenKeyboard*/() {
         padding: 0px; margin: 0px;\
         border: 1px solid lightgrey;\
     }\
-    .'+ctrl.control_classes.capital_toggle_on+' {\
+    .'+ctrl.control_classes.capital_toggle+' {\
         background-color: #0aa;\
+    }\
+    .'+ctrl.control_classes.capital_toggle_on+' {\
+        background-color: #0FF;\
     }\
     .'+ctrl.control_classes.end_composition+' {\
         background-color: #77ae01;\
+    }\
+    .'+ctrl.control_classes.back_input_key+' {\
+        background-color: #ff6c00;\
+    }\
+    .'+ctrl.control_classes.backspace_output_texts+' {\
+        background-color: #f5132e;\
     }\
     </style>\
     <div>\
