@@ -22,13 +22,13 @@ function/*OnScreenKeyboard*/() {
     console.info('OnScreenKeyboard initial');
     var ctrl = TouchInputMethod.get_controls();
 
-    var button_height = 'padding:2px 0;font-size:16px;height:30px;max-height:30px;';
+    var button_height = 'padding:2px 0;font-size:64px;height:64px;max-height:64px;';
 
     var kb = document.createElement('div');
     kb.innerHTML = '\
     <style type="text/css">\
     #'+ctrl.show_input_keys_id+' {\
-        font-size:18px;min-width: 5em; max-width: 8em;\
+        font-size:25px;min-width: 5em; max-width: 8em;\
         float: left; clear: left;\
         background-color: #ffe5cc;\
         color: #000;\
@@ -38,8 +38,14 @@ function/*OnScreenKeyboard*/() {
         height: 90px; max-width:320px;\
         overflow-x: hidden; overflow-y: auto;\
         margin-bottom: 5px;\
+        margin: 2px;\
     }\
     .'+ctrl.control_classes.select_engine+' {\
+        font-size:25px;\
+        height:30px;\
+        max-height:30px;\
+        min-width: 5em;\
+        max-width: 8em;\
         position: relative;\
         background-color: #A9A9A9;\
     }\
@@ -56,29 +62,39 @@ function/*OnScreenKeyboard*/() {
     .'+ctrl.control_classes.inputkey+' {\
         width: 32px; height: 32px;\
         max-width: 32px; max-height: 32px;\
-        font-size: 18px;\
+        font-size: 25px;\
         padding: 0px; margin: 0px;\
         border: 1px solid lightgrey;\
     }\
     .'+ctrl.control_classes.candidates+' {\
         height: 30px; min-width: 29px; max-width: 300px;\
-        font-size: 16px;\
+        font-size: 25px;\
         padding: 0px; margin: 0px;\
         border: 1px solid lightgrey;\
     }\
     .'+ctrl.control_classes.capital_toggle+' {\
+        height: 64px;\
+        weight: 64px;\
         background-color: #0aa;\
     }\
     .'+ctrl.control_classes.capital_toggle_on+' {\
+        height: 64px;\
+        weight: 64px;\
         background-color: #0FF;\
     }\
     .'+ctrl.control_classes.end_composition+' {\
+        height: 64px;\
+        weight: 64px;\
         background-color: #77ae01;\
     }\
     .'+ctrl.control_classes.back_input_key+' {\
+        height: 64px;\
+        weight: 64px;\
         background-color: #ff6c00;\
     }\
     .'+ctrl.control_classes.backspace_output_texts+' {\
+        height: 64px;\
+        weight: 64px;\
         background-color: #f5132e;\
     }\
     </style>\
@@ -88,18 +104,19 @@ function/*OnScreenKeyboard*/() {
     <div id="'+ctrl.show_input_keys_id+'"></div>\
      </div>\
      <div style="'+button_height+'"><button class="'+ctrl.control_classes.back_input_key+'">⍇</button><!-- ↤ ⍅ ⍇ -->\
-     <select class="'+ctrl.control_classes.select_engine+'" style="width:150px;"></select>\
+     <select class="'+ctrl.control_classes.select_engine+'" style="width:150px; font-size:25px;min-width: 5em; max-width: 8em;\"></select>\
     </div>\
     </div>\
-    <div id="'+ctrl.keyboard_id+'"><!-- required --></div>\
+    <div id="'+ctrl.keyboard_id+'" style="font-size: 38px;padding:2px %;"><!-- required --></div>\
     <div style="text-align:center;'+button_height+'">\
      <button class="'+ctrl.control_classes.capital_toggle+'" style="float:left;clear:left;">Shift</button>\
      <button class="'+ctrl.control_classes.backspace_output_texts+'" style="float:left;">清除</button>\
-     <button class="'+ctrl.control_classes.end_composition+'" >完成</button>\
+     <button class="'+ctrl.control_classes.end_composition+'" style="float:left;">完成</button>\
     <div>\
     </div>';
 
     with (kb.style) {
+        fontSize= '64px';
         margin= 0;
         color= '#000';
         backgroundColor = '#d5d5d5';
