@@ -40,6 +40,5 @@
   "minus": "-",
   "plus": "=",
   "quotation": "\u0022",
-  "slash": "/",
-  "enter": "\n"
+  "slash": "/"
 }

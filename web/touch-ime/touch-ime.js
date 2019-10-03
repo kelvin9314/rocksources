@@ -24,44 +24,31 @@ information about Touch IME.
 */
 var TouchInputMethod = new (function(){
 
-var default_input_method_engine_name = 'zhuyin';
+var default_input_method_engine_name = 'en';
 var current_input_method_engine_name = default_input_method_engine_name;
-var is_user_change_engine = false;
+var is_user_change_engine = true;
 
 var engine_info = {
     "zhuyin":   {"name": "注音"},
     "en":       {"name": "英數"},
     "enShift":  {"name": "英數大"},
-    "email":    {"name": "電郵"},
     "pinyin":   {"name": "拼音"},
-    "array30":  {"name": "行列30"},
-    "cangjie3": {"name": "倉頡"},
-    "cangjie5": {"name": "倉頡五"},
-    "quick":    {"name": "速成"}
 };
 
 // 輸入法切換鏈
 var engines_cycle = {
-    "zhuyin":   "en",
-    "en":       "email",
-    "email":    "pinyin",
-    "pinyin":   "quick",
-    "quick":    "array30",
-    "array30":  "zhuyin"
+    "en":       "zhuyin",
+    "zhuyin":   "pinyin",
+    "pinyin":    "en",
 };
 
 // 指示特殊 input type 專用的輸入法
 var special_input_keyboard_map = {
     'password': 'en',
-    'datetime': 'en',
-    'date': 'en',
-    'month': 'en',
-    'week': 'en',
-    'time': 'en',
-    'localdatetime': 'en',
     'number': 'en',
     'range': 'en',
-    'email': 'email'
+    'email': 'pinyin',
+    'text': 'zhuyin',
 };
 
 var output = false; // dom cache
