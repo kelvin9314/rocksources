@@ -36,17 +36,19 @@ information about Touch IME.
         #'+ctrl.candidate_id+' {\
           clear: both;\
           font-size:42px;\
-          height: 90px; max-width:320px;\
+          weight: 120px;\
+          height: 120px; max-width:320px;\
           overflow-x: hidden; overflow-y: auto;\
           margin-bottom: 5px;\
           margin: 2px;\
         }\
         .'+ctrl.control_classes.switch_engine+' {\
-          height: 42px;\
-          weight: 42px;\
+          height: 60px;\
+          weight: 60px;\
           color: #FFF;\
           border-radius: 0.25em;\
           background-color: #000;\
+          font-weight:600;\
         }\
         .'+ctrl.control_classes.inputkey+' {\
           width: 32px; height: 32px;\
@@ -63,16 +65,17 @@ information about Touch IME.
         }\
         .'+ctrl.control_classes.capital_toggle+', .'+ctrl.control_classes.capital_toggle_on+', .'+ctrl.control_classes.end_composition+', .'+ctrl.control_classes.end_composition+', .'+ctrl.control_classes.back_input_key+', .'+ctrl.control_classes.backspace_output_texts+'   {\
           font-family:arial, "Hiragino Sans GB", "Microsoft Yahei", 微軟黑體, Tahoma, Arial, Helvetica, STHeiti; \
-          height: 42px;\
-          weight: 42px;\
+          height: 60px;\
+          weight: 60px;\
           color: white;\
+          font-weight:600;\
           border-radius: 0.25em;\
         }\
         .'+ctrl.control_classes.capital_toggle+' {\
           background-color: #0aa;\
         }\
         .'+ctrl.control_classes.capital_toggle_on+' {\
-          background-color: #0FF;\
+          background-color: #0ac;\
         }\
         .'+ctrl.control_classes.end_composition+' {\
           background-color: #77ae01;\
@@ -90,7 +93,7 @@ information about Touch IME.
           padding: 5px ;\
         }\
         </style>\
-        <div>\
+        <div id="popup_keyboard">\
         <div id="'+ctrl.candidate_id+'"><!-- required --></div>\
         </div>\
         <div id="'+ctrl.show_input_keys_id+'"></div>\
@@ -98,7 +101,7 @@ information about Touch IME.
          <div style="'+button_height+'"></div>\
         <div id="'+ctrl.keyboard_id+'" class="'+ctrl.keyboard_id+'"><!-- required --></div>\
         <div style="text-align:center;'+button_height+'">\
-         <button class="'+ctrl.control_classes.capital_toggle+'" style="float:left;clear:left;">Shift</button>\
+         <button class="'+ctrl.control_classes.capital_toggle+'" style="float:left;clear:left;">大小寫</button>\
          <button class="'+ctrl.control_classes.backspace_output_texts+'" style="float:left;">清除</button>\
          <button class="'+ctrl.control_classes.switch_engine +'"  style="float:left;">切換輸入法</button>\
          <button class="'+ctrl.control_classes.end_composition+'" style="float:left;">完成</button>\
@@ -133,16 +136,18 @@ information about Touch IME.
     
         TouchInputMethod.oncomposition = function() {
             var target = TouchInputMethod.get_target();
-            console.log(target);
-            console.log(`target.offsetTop : ${target.offsetTop}`);
-            console.log(`target.offsetHeight : ${target.offsetHeight}`);
-            console.log(`target.offsetWidth : ${target.offsetWidth}`);
-            console.log(`target.clientWidth : ${target.clientWidth}`);
-            console.log(`target.clientHeight : ${target.clientHeight}`);
-            console.log(`target.offsetTop : ${target.offsetTop}`);
-            console.log(`target.offsetLeft : ${target.offsetLeft}`);
-            kb.style.top = (target.clientHeight + target.offsetHeight + 120) + 'px';
-            kb.style.left = (target.offsetLeft + 60) + 'px';
+            // console.log(target);
+            // console.log(`target.offsetTop : ${target.offsetTop}`);
+            // console.log(`target.offsetHeight : ${target.offsetHeight}`);
+            // console.log(`target.offsetWidth : ${target.offsetWidth}`);
+            // console.log(`target.clientWidth : ${target.clientWidth}`);
+            // console.log(`target.clientHeight : ${target.clientHeight}`);
+            // console.log(`target.offsetTop : ${target.offsetTop}`);
+            // console.log(`target.offsetLeft : ${target.offsetLeft}`);
+            // kb.style.top = (target.clientHeight + target.offsetHeight + 120) + 'px';
+            // kb.style.left = (target.offsetLeft + 60) + 'px';.
+            kb.style.top = (target.offsetTop + target.offsetHeight + 10) + 'px';
+            kb.style.left = (target.offsetLeft + 10) + 'px';
             kb.style.visibility = "visible";
             if (old_oncomposition)
                 old_oncomposition.call(TouchInputMethod);
@@ -182,11 +187,11 @@ information about Touch IME.
             kb.style.left = ev.clientX - kb_x + 'px';
             kb.style.top = ev.clientY - kb_y + 'px';
         }, false);
-      //   window.addEventListener('compositionend', function(ev){
-      //     kb.style.visibility = "hidden";
-      //       if (old_oncompositionend)
-      //           old_oncompositionend.call(TouchInputMethod);
-      //   }, false);
+        window.addEventListener('mouseleave', function(ev){
+          kb.style.visibility = "hidden";
+            if (old_oncompositionend)
+                old_oncompositionend.call(TouchInputMethod);
+        }, false);
         
         TouchInputMethod.init();
     }
