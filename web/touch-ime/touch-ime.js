@@ -566,7 +566,10 @@ function input_method_engine_loaded() {
     if (!keyboard) // Document is not laoded, DOMtree is not ready.
         return;
 
-    keyboard.innerHTML = '';
+    keyboard.innerHTML = '\
+        <style type="text/css">\
+        </style>\
+    ';  
     keyboard_layout.forEach((v, idx, ot)=>{
         let btn;
         if (v == '\n') {
