@@ -93,7 +93,7 @@ information about Touch IME.
           padding: 5px ;\
         }\
         </style>\
-        <div id="popup_keyboard">\
+        <div >\
         <div id="'+ctrl.candidate_id+'"><!-- required --></div>\
         </div>\
         <div id="'+ctrl.show_input_keys_id+'"></div>\
@@ -108,7 +108,7 @@ information about Touch IME.
          <button class="'+ctrl.control_classes.back_input_key+'"  style="float:left;">倒退</button><!-- ↤ ⍅ ⍇ -->\
         <div>\
         </div>';
-    
+        
         with (kb.style) {
           fontSize= '64px';
           margin= '0';
@@ -171,7 +171,7 @@ information about Touch IME.
             kb_x = (ev.clientX - kb.offsetLeft);
             kb_y = (ev.clientY - kb.offsetTop);
         }, false);
-    
+
         kb.addEventListener('mouseup', function(ev){
             //console.log('up', ev.target, ev.clientX, ev.clientY);
             if (!being_dragged)
@@ -180,18 +180,23 @@ information about Touch IME.
             kb.style.left = ev.clientX - kb_x + 'px';
             kb.style.top = ev.clientY - kb_y + 'px';
         }, false);
-    
+
+        kb.addEventListener('mouseleave', function(ev){
+          console.log('keyboard closed');
+          TouchInputMethod.oncompositionend()
+        }, false);
+
         window.addEventListener('mousemove', function(ev){
             if (!being_dragged)
                 return;
             kb.style.left = ev.clientX - kb_x + 'px';
             kb.style.top = ev.clientY - kb_y + 'px';
         }, false);
-        window.addEventListener('mouseleave', function(ev){
-          kb.style.visibility = "hidden";
-            if (old_oncompositionend)
-                old_oncompositionend.call(TouchInputMethod);
-        }, false);
+
+        // inputFiled.addEventListener('click', function(ev){
+        //   console.log('inputFiled');
+        //  }, false);
+
         
         TouchInputMethod.init();
     }
