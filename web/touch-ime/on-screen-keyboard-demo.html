@@ -1,43 +1,81 @@
 <!DOCTYPE html>
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
-<script src='touch-ime.js'></script>
-<script src='on-screen-keyboard.js'></script>
-<script type="text/javascript">
+<head>
+    <html>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <link href="css/reset.css" rel="stylesheet" type="text/css">
+    <link href="css/font.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <title>On Screen Keyboard Demo</title>
+</head>
+<body >
+    <div id="HeaderContainer">
+        <div id="Header">
+            <div id="Logo">
+                <a href="index.php">
+                    <img src="images/logo.png" alt="Ubike">
+                </a>
+            </div>
+            <div class="contact grayContactIcon">
+                <p class="lang_joint_01"></p><p id="servicePhone"></p>
+            </div>
+            <div id="Main_title">
+                <h1 class="MBcenter lang_txt_060"></h1>
+            </div>
+            <div id="pageHome_BT">
+                <a href="index.php"></a>
+            </div>
+        </div>
+    </div>
+    <div id="MainContainer">
+        <div id="Main">
+            <div class="CRT"></div>
+            <div class="eightywidth" id="Login_Container">
+                <div id="MBcenter_title" class="textMid">
+                    <h2 class="textMid PadTop15 lang_txt_061"></h2>
+                </div>
+                <p class="PadTop25">
+                    <span class="title EN lang_txt_062"></span>
+                    <span class="input input--yoshiko">
+                      <input class="input__field input__field--yoshiko lang_placeholder_001" type="text" id="PhoneNumber" placeholder="" autocomplete="off" />
+                    </span>
+                </p>
+                <p>
+                    <span class="title EN lang_txt_063"></span>
+                    <span class="input input--yoshiko">
+                      <input class="input__field input__field--yoshiko lang_placeholder_002" type="password" id="Password" placeholder="" autocomplete="off" />
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="FooterBT_Container">
+        <div id="FooterBT" class="Half">
+            <ul>
+                <li>
+                    <a href="member_forgetPassword.php" class="forgetPass lang_msg_009"></a>
+                </li>
+                <li>
+                    <a href="#" onclick="login();" class="sendform lang_txt_064"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src='touch-ime.js'></script>
+    <script src='on-screen-keyboard.js'></script>
+    <script type="text/javascript">
 
-/*
-TouchInputMethod.oncomposition = function() {
-    console.log('show');
-}
-TouchInputMethod.oncompositionend = function() {
-    console.log('hide');
-}
-*/
-</script>
+    /*
+    TouchInputMethod.oncomposition = function() {
+        console.log('show');
+    }
+    TouchInputMethod.oncompositionend = function() {
+        console.log('hide');
+    }
+    */
+    </script>
 
-<title>On Screen Keyboard Demo</title>
-<p>
-點擊任何輸入元件(輸入框)，便會觸發 touch-ime 。
-</p>
-<ul> 
-<li>焦點進入輸入框時，便會彈出浮動鍵盤。</li>
-<li>touch-ime 會記憶最近使用的輸入框。就算使用者碰觸其他區域使焦點離開輸入框， touch-ime 還是會把輸入內容填入預期的輸入框。</li>
-<li>點擊浮動鍵盤上的「完成」鍵，則會收起浮動鍵盤。</li>
-<li>touch-ime 可以在失去焦點的狀態下，繼續輸入工作。所以不會以「失去焦點」為時間點自動收起浮動鍵盤。</li>
-<li>選取特定型態(password,mail)的輸入框時，會出現對應型態的鍵盤佈局。</li>
-<li>touch-ime 會記憶單純文字型態(text)的輸入框使用的輸入法引擎，而不是每次都使用預設輸入法引擎。</li>
-</ul>
-
-<div>
-    <lab>姓名: </labe><input type="text" /><br/>
-    <labe>pass: </labe><input type="password" /><br/>
-    <labe>mail: </labe><input type="email" /><br/>
-</div>
-
-<hr/>
-<p>預留鍵盤區域展示: [<a href="index.html">Static Keyboard Area Demo</a>]
-</p>
+</body>
 
 </html>
 

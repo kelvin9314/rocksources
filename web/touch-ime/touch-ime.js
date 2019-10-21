@@ -44,11 +44,8 @@ var engines_cycle = {
 
 // 指示特殊 input type 專用的輸入法
 var special_input_keyboard_map = {
+    'text': 'en',
     'password': 'en',
-    'number': 'en',
-    'range': 'en',
-    'email': 'pinyin',
-    'text': 'zhuyin',
 };
 
 var output = false; // dom cache
@@ -524,7 +521,7 @@ function word_table_loaded() {
         try_to_load_usable_engine();
         return;
     }
-    console.log('word table loaded');
+    // console.log('word table loaded');
     word_table = JSON.parse(word_table_xhr.responseText);
 
     engine_word_table_loaded = true;
@@ -538,7 +535,7 @@ function keyboard_loaded() {
         try_to_load_usable_engine();
         return;
     }
-    console.log('keyboard loaded');
+    // console.log('keyboard loaded');
     let tmp_keyboard = JSON.parse(keyboard_xhr.responseText);
     max_input_keys = tmp_keyboard.max_input_keys;
     key_sym_map = tmp_keyboard.key_sym_map;
@@ -560,7 +557,7 @@ function input_method_engine_loaded() {
     if (!engine_word_table_loaded || !engine_keyboard_loaded)
         return;
 
-    console.log('engine loaded');
+    // console.log('engine loaded');
     let tmp;
 
     if (!keyboard) // Document is not laoded, DOMtree is not ready.
@@ -1045,6 +1042,7 @@ function bind_all_text_input_focus_handler() {
                 TouchInputMethod.oncomposition();
             }
         }, false);
+        
     }
 } // end bind_all_text_input_focus_handler()
 

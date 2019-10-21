@@ -22,7 +22,7 @@ information about Touch IME.
         console.info('OnScreenKeyboard initial');
         var ctrl = TouchInputMethod.get_controls();
     
-        var button_height = 'padding:2px 0;font-size:38px;height:42px;max-height:42px;';
+        var button_height = 'padding:2px 0;font-size:8px;height:20px;max-height:20px;';
     
         var kb = document.createElement('div');
         kb.innerHTML = '\
@@ -35,20 +35,23 @@ information about Touch IME.
         }\
         #'+ctrl.candidate_id+' {\
           clear: both;\
-          font-size:42px;\
+          font-size:38px;\
           weight: 120px;\
-          height: 120px; max-width:320px;\
+          max-width:320px;\
+          height: 80px;\
           overflow-x: hidden; overflow-y: auto;\
           margin-bottom: 5px;\
           margin: 2px;\
         }\
         .'+ctrl.control_classes.switch_engine+' {\
-          height: 60px;\
-          weight: 60px;\
+          height: 48px;\
+          weight: 48px;\
           color: #FFF;\
           border-radius: 0.25em;\
           background-color: #000;\
           font-weight:600;\
+          margin:0.125em;\
+          padding:5px;\
         }\
         .'+ctrl.control_classes.inputkey+' {\
           width: 32px; height: 32px;\
@@ -56,6 +59,8 @@ information about Touch IME.
           font-size: 25px;\
           padding: 0px; margin: 0px;\
           border: 1px solid lightgrey;\
+          width: 10px:\
+          height: 10px:\
         }\
         .'+ctrl.control_classes.candidates+' {\
           height: 30px; min-width: 29px; max-width: 300px;\
@@ -65,11 +70,13 @@ information about Touch IME.
         }\
         .'+ctrl.control_classes.capital_toggle+', .'+ctrl.control_classes.capital_toggle_on+', .'+ctrl.control_classes.end_composition+', .'+ctrl.control_classes.end_composition+', .'+ctrl.control_classes.back_input_key+', .'+ctrl.control_classes.backspace_output_texts+'   {\
           font-family:arial, "Hiragino Sans GB", "Microsoft Yahei", 微軟黑體, Tahoma, Arial, Helvetica, STHeiti; \
-          height: 60px;\
-          weight: 60px;\
+          height: 48px;\
+          weight: 48px;\
           color: white;\
           font-weight:600;\
           border-radius: 0.25em;\
+          margin:0.125em;\
+          padding:5px;\
         }\
         .'+ctrl.control_classes.capital_toggle+' {\
           background-color: #0aa;\
@@ -92,15 +99,21 @@ information about Touch IME.
           margin: 0.125em;\
           padding: 5px ;\
         }\
+        .'+ctrl.keyboard_id+' {\
+          font-family:arial, "Hiragino Sans GB", "Microsoft Yahei", 微軟黑體, Tahoma, Arial, Helvetica, STHeiti; \
+          font-size: 38px;\
+          margin: 0.125em;\
+          padding: 5px ;\
+        }\
         </style>\
-        <div >\
-        <div id="'+ctrl.candidate_id+'"><!-- required --></div>\
+        <div class="input_method_space">\
+        <div class="input_method_candidate_id" id="'+ctrl.candidate_id+'"><!-- required --></div>\
         </div>\
-        <div id="'+ctrl.show_input_keys_id+'"></div>\
+            <div class="input_method_show_input_keys_id" id="'+ctrl.show_input_keys_id+'"></div>\
          </div>\
-         <div style="'+button_height+'"></div>\
+         <div class="input_method_space" style="'+button_height+'"></div>\
         <div id="'+ctrl.keyboard_id+'" class="'+ctrl.keyboard_id+'"><!-- required --></div>\
-        <div style="text-align:center;'+button_height+'">\
+        <div class="input_method_space" style="text-align:center;margin:0.25em;padding:5px;'+button_height+'">\
          <button class="'+ctrl.control_classes.capital_toggle+'" style="float:left;clear:left;">大小寫</button>\
          <button class="'+ctrl.control_classes.backspace_output_texts+'" style="float:left;">清除</button>\
          <button class="'+ctrl.control_classes.switch_engine +'"  style="float:left;">切換輸入法</button>\
@@ -121,7 +134,8 @@ information about Touch IME.
           visibility = 'hidden';
           zIndex = '99999';
         }
-    
+        
+        kb.id="ime-keyboard-area"
         var inputs = kb.getElementsByTagName('button');
         for (var i = 0; i < inputs.length; ++i)
             inputs[i].style.fontSize = '20px';
@@ -137,17 +151,28 @@ information about Touch IME.
         TouchInputMethod.oncomposition = function() {
             var target = TouchInputMethod.get_target();
             // console.log(target);
-            // console.log(`target.offsetTop : ${target.offsetTop}`);
-            // console.log(`target.offsetHeight : ${target.offsetHeight}`);
-            // console.log(`target.offsetWidth : ${target.offsetWidth}`);
-            // console.log(`target.clientWidth : ${target.clientWidth}`);
-            // console.log(`target.clientHeight : ${target.clientHeight}`);
-            // console.log(`target.offsetTop : ${target.offsetTop}`);
-            // console.log(`target.offsetLeft : ${target.offsetLeft}`);
-            // kb.style.top = (target.clientHeight + target.offsetHeight + 120) + 'px';
-            // kb.style.left = (target.offsetLeft + 60) + 'px';.
-            kb.style.top = (target.offsetTop + target.offsetHeight + 10) + 'px';
-            kb.style.left = (target.offsetLeft + 10) + 'px';
+            console.log(`target.offsetLeft : ${target.offsetLeft}`);
+            // console.log(`getBoundingClientRect().bottom ${target.getBoundingClientRect().bottom}`);
+            var keyboardPosition = {x:0, y:0}
+            var elementDistanceFromTop = target.getBoundingClientRect().bottom;
+            var elementDistanceFromLeft = target.getBoundingClientRect().left;
+            var elementDistanceFromRight = target.getBoundingClientRect().right;
+            console.log(`elementDistanceFromLeft : ${elementDistanceFromLeft}`);
+            console.log(`elementDistanceFromRight : ${elementDistanceFromRight}`);
+
+
+            var kbHight = +window.getComputedStyle(kb).getPropertyValue('height').replace('px','');
+            var kbWidth = +window.getComputedStyle(kb).getPropertyValue('width').replace('px','');
+            console.log(`kbHight ${kbHight}`);
+            console.log(`kbWidth ${kbWidth}`);
+            // 判決 input 下方是否位置顯示 kb
+            keyboardPosition.x = (elementDistanceFromTop > kbHight) ? kbHight : elementDistanceFromTop
+            // 判決 input 左方/右方是否位置顯示 kb
+  
+            kb.style.top = keyboardPosition.x + 'px';
+            kb.style.left = (target.offsetLeft + 40) + 'px';
+            // console.log(`kbHight :${kbHight}`);
+
             kb.style.visibility = "visible";
             if (old_oncomposition)
                 old_oncomposition.call(TouchInputMethod);
@@ -181,10 +206,10 @@ information about Touch IME.
             kb.style.top = ev.clientY - kb_y + 'px';
         }, false);
 
-        kb.addEventListener('mouseleave', function(ev){
-          console.log('keyboard closed');
-          TouchInputMethod.oncompositionend()
-        }, false);
+        // kb.addEventListener('mouseleave', function(ev){
+        //   console.log('keyboard closed');
+        //   TouchInputMethod.oncompositionend()
+        // }, false);
 
         window.addEventListener('mousemove', function(ev){
             if (!being_dragged)
@@ -193,11 +218,38 @@ information about Touch IME.
             kb.style.top = ev.clientY - kb_y + 'px';
         }, false);
 
-        // inputFiled.addEventListener('click', function(ev){
-        //   console.log('inputFiled');
-        //  }, false);
+        var anotherBlockIds = ['HeaderContainer', 'Header', 'MainContainer', 'Main', 'MBcenter_title', 'Login_Container']
+        // var inputBlockIds = [
+        //     'PhoneNumber', 
+        //     'Password', 
+        //     'CardNumber', 
+        //     'CheckPassword',
+        //     'IDnumber',
+        //     'Approve', 
+        //     'BycNumber', 
+        //     'checkbox-01']
 
-        
+        // var input = document.querySelector('#Password')
+
+        // input.onfocus = function(e){
+        //     console.log('onfocus')
+        // }
+        // input.onblur = function(e){
+        //     console.log(e)
+        // }
+
+        window.addEventListener('click', function(ev){
+            ev.stopPropagation();
+            if(ev.target.className.includes("input__field")){
+                console.log('---kb show---');
+                TouchInputMethod.oncomposition(ev.target)
+            }
+            if(anotherBlockIds.includes(ev.target.id)){
+                console.log('---kb end---');
+                TouchInputMethod.oncompositionend()
+            }
+          
+        }, false);
         TouchInputMethod.init();
     }
     , false);
