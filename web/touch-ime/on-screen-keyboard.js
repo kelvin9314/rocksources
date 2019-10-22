@@ -131,10 +131,11 @@ information about Touch IME.
           borderRadius= '0.25em';
           padding= '5px 0 5px 5px';
           position = 'absolute';
-          visibility = 'hidden';
           zIndex = '99999';
+          display= 'none';
         }
         
+        kb.className="ime-keyboard-area"
         kb.id="ime-keyboard-area"
         var inputs = kb.getElementsByTagName('button');
         for (var i = 0; i < inputs.length; ++i)
@@ -147,42 +148,64 @@ information about Touch IME.
         var being_dragged = false;
         var old_oncomposition = TouchInputMethod.oncomposition;
         var old_oncompositionend = TouchInputMethod.oncompositionend;
+
+        function getElementPosition(element){
+            var kb_render_position = { x:0, y:0}
+            var screenAvailHeight = window.screen.availHeight;  // 768
+            var screenAvailWidth = window.screen.availWidth;    //1024
+
+            var elementDistanceFromTop = element.getBoundingClientRect().top;
+            var elementDistanceFromBottom = element.getBoundingClientRect().bottom;
+            var elementDistanceFromLeft = element.getBoundingClientRect().left;
+            var elementDistanceFromRight = element.getBoundingClientRect().right;
+            console.log(`elementDistanceFromTop : ${elementDistanceFromTop}`);
+            console.log(`elementDistanceFromBottom : ${elementDistanceFromBottom}`);
+            console.log(`elementDistanceFromLeft : ${elementDistanceFromLeft}`);
+            console.log(`elementDistanceFromRight : ${elementDistanceFromRight}`);
+   
+            var kbHight = window.getComputedStyle(kb).getPropertyValue('height').replace('px','');
+            kbHight = (isNaN(kbHight)) ? 355 : (+kbHight)
+            console.log(`kbHight : ${kbHight}`);
+            var kbWidth = window.getComputedStyle(kb).getPropertyValue('width').replace('px','');
+            kbWidth = (isNaN(kbWidth)) ? 372 : (+kbWidth)
+            console.log(`kbWidth : ${kbWidth}`);
+            
+            var height;
+            var width ;
+            // 判斷 input element上下方有足夠空間顯示鍵盤
+            if( screenAvailHeight - elementDistanceFromBottom > kbHight){
+                kb_render_position.x = elementDistanceFromBottom + 10
+            }else{
+                kb_render_position.x = elementDistanceFromTop - kbHight - 10
+            }
+            // 判斷 鍵盤和 input element width的對齊
+            if(elementDistanceFromLeft + kbWidth <= screenAvailWidth){
+                kb_render_position.y = elementDistanceFromLeft
+            }else{
+                kb_render_position.y = screenAvailWidth - kbWidth
+            }
+
+            return kb_render_position
+        }
     
         TouchInputMethod.oncomposition = function() {
             var target = TouchInputMethod.get_target();
-            // console.log(target);
-            console.log(`target.offsetLeft : ${target.offsetLeft}`);
-            // console.log(`getBoundingClientRect().bottom ${target.getBoundingClientRect().bottom}`);
-            var keyboardPosition = {x:0, y:0}
-            var elementDistanceFromTop = target.getBoundingClientRect().bottom;
-            var elementDistanceFromLeft = target.getBoundingClientRect().left;
-            var elementDistanceFromRight = target.getBoundingClientRect().right;
-            console.log(`elementDistanceFromLeft : ${elementDistanceFromLeft}`);
-            console.log(`elementDistanceFromRight : ${elementDistanceFromRight}`);
-
-
-            var kbHight = +window.getComputedStyle(kb).getPropertyValue('height').replace('px','');
-            var kbWidth = +window.getComputedStyle(kb).getPropertyValue('width').replace('px','');
-            console.log(`kbHight ${kbHight}`);
-            console.log(`kbWidth ${kbWidth}`);
-            // 判決 input 下方是否位置顯示 kb
-            keyboardPosition.x = (elementDistanceFromTop > kbHight) ? kbHight : elementDistanceFromTop
-            // 判決 input 左方/右方是否位置顯示 kb
-  
+            var keyboardPosition = getElementPosition(target)
             kb.style.top = keyboardPosition.x + 'px';
-            kb.style.left = (target.offsetLeft + 40) + 'px';
-            // console.log(`kbHight :${kbHight}`);
-
-            kb.style.visibility = "visible";
+            kb.style.left = keyboardPosition.y + 'px';
+            // console.log(`kb.style.top ${kb.style.top}`);
+            kb.style.display = "block";
             if (old_oncomposition)
                 old_oncomposition.call(TouchInputMethod);
         }
     
         TouchInputMethod.oncompositionend = function() {
-            kb.style.visibility = "hidden";
+            kb.style.display = "none";
             if (old_oncompositionend)
                 old_oncompositionend.call(TouchInputMethod);
         }
+
+        
     
         kb.addEventListener('mousedown', function(ev){
             if (ev.target.nodeName != 'DIV' ||
@@ -206,11 +229,6 @@ information about Touch IME.
             kb.style.top = ev.clientY - kb_y + 'px';
         }, false);
 
-        // kb.addEventListener('mouseleave', function(ev){
-        //   console.log('keyboard closed');
-        //   TouchInputMethod.oncompositionend()
-        // }, false);
-
         window.addEventListener('mousemove', function(ev){
             if (!being_dragged)
                 return;
@@ -218,39 +236,34 @@ information about Touch IME.
             kb.style.top = ev.clientY - kb_y + 'px';
         }, false);
 
-        var anotherBlockIds = ['HeaderContainer', 'Header', 'MainContainer', 'Main', 'MBcenter_title', 'Login_Container']
-        // var inputBlockIds = [
-        //     'PhoneNumber', 
-        //     'Password', 
-        //     'CardNumber', 
-        //     'CheckPassword',
-        //     'IDnumber',
-        //     'Approve', 
-        //     'BycNumber', 
-        //     'checkbox-01']
+        // var anotherBlockIds = ['HeaderContainer', 'Header', 'MainContainer', 'Main', 'MBcenter_title', 'Login_Container']
 
-        // var input = document.querySelector('#Password')
+        // window.addEventListener('click', function(ev){
+        //     ev.stopPropagation();
+        //     if(ev.target.className.includes("input__field")){
+        //         console.log('---kb show---');
+        //         TouchInputMethod.oncomposition()
+        //     }
+        //     console.log(ev.target.id);
+        //     console.log(ev.target.className);
+        //     if(anotherBlockIds.includes(ev.target.id)){
+        //         console.log('---kb end---');
+        //         TouchInputMethod.oncompositionend()
+        //     }
+        // })
 
-        // input.onfocus = function(e){
-        //     console.log('onfocus')
-        // }
-        // input.onblur = function(e){
-        //     console.log(e)
-        // }
-
-        window.addEventListener('click', function(ev){
-            ev.stopPropagation();
-            if(ev.target.className.includes("input__field")){
-                console.log('---kb show---');
-                TouchInputMethod.oncomposition(ev.target)
-            }
-            if(anotherBlockIds.includes(ev.target.id)){
-                console.log('---kb end---');
+        // 不是點撃在 input / keyboard 上時, keyboard 會隱藏
+        $('.input__field').focus(function() {
+            TouchInputMethod.oncomposition()
+            $(document).bind('focusin.ime-keyboard-area click.ime-keyboard-area click.input_method_candidates',function(e) {
+                if ($(e.target).closest('.ime-keyboard-area, .input__field, .input_method_candidates').length) return;
                 TouchInputMethod.oncompositionend()
-            }
+            });
+        });
           
-        }, false);
+        // }, false);
         TouchInputMethod.init();
+        
     }
     , false);
     
