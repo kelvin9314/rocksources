@@ -44,8 +44,8 @@ var engines_cycle = {
 
 // 指示特殊 input type 專用的輸入法
 var special_input_keyboard_map = {
-    'text': 'en',
-    'password': 'en',
+    'text': 'pinyin',
+    'password': 'pinyin',
 };
 
 var output = false; // dom cache
