@@ -28,10 +28,17 @@ information about Touch IME.
       kb.innerHTML = '\
       <style type="text/css">\
       #'+ctrl.show_input_keys_id+' {\
-        background-color: #ffe5cc;\
-        color: #000;\
+        font-family:arial, "Hiragino Sans GB", "Microsoft Yahei", 微軟黑體, Tahoma, Arial, Helvetica, STHeiti; \
+        font-size:40px;\
+        font-weight: outset;\
+        text-align: left;\
+        letter-spacing: 0.25em;\
+        border-bottom-style: inset;\
+        color: #565656;\
         float: left;\
-        font-size:18px;min-width: 5em; max-width: 8em;\
+        width: 70%;\
+        height: 44px;\
+        margin: 0px 4px 0 6px;\
       }\
       #'+ctrl.candidate_id+' {\
         clear: both;\
@@ -40,21 +47,28 @@ information about Touch IME.
         max-width:100%;\
         overflow-x: hidden; overflow-y: auto;\
         weight: 10%;\
+        margin: 2px 4px;\
       }\
       .'+ctrl.control_classes.candidates+' {\
-        height: 30px; min-width: 29px; max-width: 300px;\
-        font-size: 25px;\
-        padding: 0px; margin: 0px;\
+        height: 30px;\
+        min-width: 29px;\
+        max-width: 300px;\
+        font-size: 22px;\
+        padding: 0px; \
+        margin: 0px 4px;\
         border: 1px solid lightgrey;\
       }\
-      .'+ctrl.control_classes.capital_toggle+', .'+ctrl.control_classes.capital_toggle_on+', .'+ctrl.control_classes.end_composition+', .'+ctrl.control_classes.end_composition+', .'+ctrl.control_classes.back_input_key+', .'+ctrl.control_classes.backspace_output_texts+', .'+ctrl.control_classes.switch_engine+'   {\
-        border-radius: 25px;\
+      .'+ctrl.control_classes.capital_toggle+', .'+ctrl.control_classes.capital_toggle_on+', .'+ctrl.control_classes.end_composition+', .'+ctrl.control_classes.back_input_key+', .'+ctrl.control_classes.backspace_output_texts+', .'+ctrl.control_classes.switch_engine+'   {\
+        border-radius: 0.5em;\
         color: white;\
         font-family:arial, "Hiragino Sans GB", "Microsoft Yahei", 微軟黑體, Tahoma, Arial, Helvetica, STHeiti; \
         font-weight:600;\
-        height: 48px;\
+        text-align: center;\
+        letter-spacing: 0.25em;\
+        height: 40px;\
         margin: auto;\
-        padding:0 55px;\
+        padding:0 5px;\
+        width: 23%;\
       }\
       .'+ctrl.control_classes.inputkey+' {\
         -moz-border-radius: 0.25em;\
@@ -72,51 +86,41 @@ information about Touch IME.
         margin: 2px 4px;\
         padding: 0 10px ;\
         text-align: center;\
-        width: 70px;\
+        width: 65px;\
       }\
-      .'+ctrl.control_classes.switch_engine+' {\
-        background-color: #000;\
-      }\
-      .'+ctrl.control_classes.capital_toggle+' {\
-        background-color: #0aa;\
-      }\
-      .'+ctrl.control_classes.capital_toggle_on+' {\
-        background-color: #0ac;\
+      .'+ctrl.control_classes.switch_engine+', .'+ctrl.control_classes.backspace_output_texts+', .'+ctrl.control_classes.capital_toggle_on+', .'+ctrl.control_classes.capital_toggle+', .'+ctrl.control_classes.back_input_key+'  {\
+        background-color: #565656;\
+        margin: 0 10px 0 0;\
       }\
       .'+ctrl.control_classes.end_composition+' {\
         background-color: #77ae01;\
       }\
-      .'+ctrl.control_classes.back_input_key+' {\
-        background-color: #ff6c00;\
-      }\
-      .'+ctrl.control_classes.backspace_output_texts+' {\
-        background-color: #f5132e;\
-      }\
       .'+ctrl.keyboard_id+' {\
         font-family:arial, "Hiragino Sans GB", "Microsoft Yahei", 微軟黑體, Tahoma, Arial, Helvetica, STHeiti; \
         font-size: 38px;\
-        margin: auto;\
+        margin: 0px;\
         padding: 1px ;\
-        width: 95%;\
       }\
       .input_method_function_keys {\
+        margin:0 4px;\
         vertical-align:middle;\
       }\
+      .input_method_kb_content_area {\
+        margin:0 4px;\
+      }\
       </style>\
-      <div class="input_method_candidate_id" id="'+ctrl.candidate_id+'"><!-- required --></div>\
-      </div>\
-          <div class="input_method_show_input_keys_id" id="'+ctrl.show_input_keys_id+'"></div>\
-      </div>\
-       <div class="input_method_space" style="'+button_height+'"></div>\
-      <br>\
-      <div id="'+ctrl.keyboard_id+'" class="'+ctrl.keyboard_id+'"><!-- required --></div>\
-      <div class="input_method_function_keys"> \
-        <button class="'+ctrl.control_classes.capital_toggle+'" style="float:left;clear:left;">大小寫</button>\
-        <button class="'+ctrl.control_classes.backspace_output_texts+'" style="float:left;">清除</button>\
-        <button class="'+ctrl.control_classes.switch_engine +'"  style="float:left;">切換輸入法</button>\
-        <button class="'+ctrl.control_classes.end_composition+'" style="float:left;">完成</button>\
-        <button class="'+ctrl.control_classes.back_input_key+'"  style="float:left;">倒退</button><!-- ↤ ⍅ ⍇ -->\
-      </div>';
+      <div class="input_method_kb_content_area">\
+        <div class="input_method_show_input_keys_id" id="'+ctrl.show_input_keys_id+'"></div>\
+        <button class="'+ctrl.control_classes.back_input_key+'"  style="margin:0 20px;">倒退</button><!-- ↤ ⍅ ⍇ -->\
+        <div class="input_method_candidate_id" id="'+ctrl.candidate_id+'"><!-- required --></div>\
+        <div id="'+ctrl.keyboard_id+'" class="'+ctrl.keyboard_id+'"><!-- required --></div>\
+        <div class="input_method_function_keys"> \
+          <button class="'+ctrl.control_classes.switch_engine +'"  style="float:left;clear:left;">切換輸入法</button>\
+          <button class="'+ctrl.control_classes.capital_toggle+'" style="float:left;">大小寫</button>\
+          <button class="'+ctrl.control_classes.backspace_output_texts+'" style="float:left;">清除</button>\
+          <button class="'+ctrl.control_classes.end_composition+'" style="float:left;">完成</button>\
+        </div>\
+      <div>';
       
       with (kb.style) {
         margin= '0';
@@ -128,8 +132,9 @@ information about Touch IME.
         position = 'absolute';
         zIndex = '99999';
         display= 'none';
-        width= '90%';
+        margin= '0 5%';
       }
+
       
       kb.className="ime-keyboard-area"
       kb.id="ime-keyboard-area"
@@ -148,15 +153,15 @@ information about Touch IME.
       function getElementPosition(element){
           var kb_render_position = { x:0, y:0}
           var screenAvailHeight = window.screen.availHeight;  // 768
-          var screenAvailWidth = window.screen.availWidth;    //1024
+          // var screenAvailWidth = window.screen.availWidth;    //1024
 
-          var elementDistanceFromTop = element.getBoundingClientRect().top;
+          // var elementDistanceFromTop = element.getBoundingClientRect().top;
           var elementDistanceFromBottom = element.getBoundingClientRect().bottom;
-          var elementDistanceFromLeft = element.getBoundingClientRect().left;
-          var elementDistanceFromRight = element.getBoundingClientRect().right;
+          // var elementDistanceFromLeft = element.getBoundingClientRect().left;
+          // var elementDistanceFromRight = element.getBoundingClientRect().right;
  
           var kbHight = window.getComputedStyle(kb).getPropertyValue('height').replace('px','');
-          kbHight = (isNaN(kbHight)) ? 380 : (+kbHight)
+          kbHight = (isNaN(kbHight)) ? 415 : (+kbHight)
           // var kbWidth = window.getComputedStyle(kb).getPropertyValue('width').replace('px','');
           // kbWidth = (isNaN(kbWidth)) ? 372 : (+kbWidth)
           
@@ -164,15 +169,15 @@ information about Touch IME.
           var width ;
           // 判斷 input element上下方有足夠空間顯示鍵盤
           if( screenAvailHeight - elementDistanceFromBottom > kbHight){
-              kb_render_position.x = elementDistanceFromBottom + 10
+              kb_render_position.y = elementDistanceFromBottom
           }else{
-              kb_render_position.x = elementDistanceFromTop - kbHight - 10
+              kb_render_position.y = 0
           }
           // 判斷 鍵盤和 input element width的對齊
           // if(elementDistanceFromLeft + kbWidth <= screenAvailWidth){
-          //     kb_render_position.y = elementDistanceFromLeft
+          //     kb_render_position.x = elementDistanceFromLeft
           // }else{
-          //     kb_render_position.y = screenAvailWidth - kbWidth
+          //     kb_render_position.x = screenAvailWidth - kbWidth
           // }
 
           return kb_render_position
@@ -181,8 +186,7 @@ information about Touch IME.
       TouchInputMethod.oncomposition = function() {
           var target = TouchInputMethod.get_target();
           var keyboardPosition = getElementPosition(target)
-          kb.style.top = keyboardPosition.x + 'px';
-          // kb.style.left = keyboardPosition.y + 'px';
+          kb.style.top = keyboardPosition.y + 'px';
           kb.style.left = '5%';
           kb.style.display = "block";
           if (old_oncomposition)
@@ -215,8 +219,8 @@ information about Touch IME.
           if (!being_dragged)
               return;
           being_dragged = false;
-          kb.style.left = ev.clientX - kb_x + 'px';
-          kb.style.top = ev.clientY - kb_y + 'px';
+          // kb.style.left = ev.clientX - kb_x + 'px';
+          // kb.style.top = ev.clientY - kb_y + 'px';
       }, false);
 
       window.addEventListener('mousemove', function(ev){
@@ -229,8 +233,8 @@ information about Touch IME.
       // 不是點撃在 input / keyboard 上時, keyboard 會隱藏
       $('.input__field').focus(function() {
           TouchInputMethod.oncomposition()
-          $(document).bind('focusin.ime-keyboard-area click.ime-keyboard-area click.input_method_candidates',function(e) {
-              if ($(e.target).closest('.ime-keyboard-area, .input__field, .input_method_candidates').length) return;
+          $(document).bind('focusin.ime-keyboard-area click.ime-keyboard-area click.input_method_candidates click.input_method_keyboard click.input_method_kb_content_area',function(e) {
+              if ($(e.target).closest('.ime-keyboard-area, .input__field, .input_method_candidates, .input_method_keyboard .input_method_kb_content_area').length) return;
               TouchInputMethod.oncompositionend()
           });
       });
@@ -242,5 +246,3 @@ information about Touch IME.
   , false);
   
   })();
-  
-  

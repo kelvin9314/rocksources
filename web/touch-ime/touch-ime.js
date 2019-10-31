@@ -563,10 +563,7 @@ function input_method_engine_loaded() {
     if (!keyboard) // Document is not laoded, DOMtree is not ready.
         return;
 
-    keyboard.innerHTML = '\
-        <style type="text/css">\
-        </style>\
-    ';  
+    keyboard.innerHTML = '';  
     keyboard_layout.forEach((v, idx, ot)=>{
         let btn;
         if (v == '\n') {
@@ -1008,7 +1005,7 @@ function refresh_candidates() {
             //console.log("words: ", data);
         }
         else {
-            console.info('no such table, skip'); // key: 4-3-2
+            // console.info('no such table, skip'); // key: 4-3-2
             return false;
         }
     }
@@ -1042,7 +1039,6 @@ function bind_all_text_input_focus_handler() {
                 TouchInputMethod.oncomposition();
             }
         }, false);
-        
     }
 } // end bind_all_text_input_focus_handler()
 
